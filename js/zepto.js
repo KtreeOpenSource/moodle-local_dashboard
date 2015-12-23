@@ -1,13 +1,9 @@
-/*
- * My Moodle -- a user's personal dashboard
- *
- * This file contains common functions for the dashboard and profile pages.
- *
-   * @package    local_dashboard
- * @category   local
- * @copyright  2015 Ktree.com
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+/*! 
+* Zepto HTML5 Drag and Drop Sortable 
+* Author: James Doyle(@james2doyle) http://ohdoylerules.com 
+* Repository: https://github.com/james2doyle/zepto-dragswap 
+* Licensed under the MIT license 
+*/
 (function(a) {
     String.prototype.trim === a && (String.prototype.trim = function() {
         return this.replace(/^\s+|\s+$/g, "")

@@ -3,7 +3,7 @@ moodle-local_dashboard
 
 Requires:
 
-Moodle 2.7+ or higher till Moodle 3.0
+Moodle 2.6+ or higher till Moodle 3.0
 ======================================
 Plugin type:
 A Local Plugin
@@ -61,6 +61,6 @@ Post Install:
 
 After installation once after logging in a user can find this dashboard installed in his homepage.
 
-Please note that this plugin only supports 2.7+, 2.8+, 2.9+ & 3.0 versions of Moodle.
+Please note that this plugin only supports 2.6+,2.7+, 2.8+, 2.9+ & 3.0 versions of Moodle.
 ================================================================================================================================
 
