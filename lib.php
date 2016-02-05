@@ -22,15 +22,13 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define('MY_PAGE_PUBLIC', 0);
-define('MY_PAGE_PRIVATE', 1);
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once("$CFG->libdir/blocklib.php");
 global $DB, $CFG;
 function dashboard_add_instance() {
     return true;
 }
-function local_dashboard_extends_navigation(global_navigation $navigation) {
+function local_dashboard_extend_navigation(global_navigation $navigation) {
     $perfornamceurl = '/local/dashboard/index.php';
     if (isloggedin()) {
         $nodeform = $navigation->add('Dashboard', $perfornamceurl);

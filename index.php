@@ -66,7 +66,7 @@ if (!empty($users)) {
     foreach ($users as $user) {
         $timeago = format_time(time() - $user->lastaccess);
         $text .= '<tr><td><div class = "user"><a class = "dashboardlink" href = "'.
-        $url = new moodle_url($CFG->wwwroot.'/user/view.php' , array('id' => $user->id , 'course' => SITEID ,
+        $url = new moodle_url('/user/view.php' , array('id' => $user->id , 'course' => SITEID ,
         'title' => $timeago)).'">';
         $text .= fullname($user).'</a></div>';
         $link = '/message/index.php?usergroup = unread&id = '.$user->id;
@@ -79,12 +79,15 @@ if (!empty($users)) {
 } else {
         $text = "<table><tr><td class='black'>";
         $text .= get_string('nomessages', 'local_dashboard')."</td></tr>";
-        $text .= '<tr><td><a class="dashboardlink" href="'.$url = new moodle_url($CFG->wwwroot.'/message/index.php').'">'
+        $text .= '<tr><td><a class="dashboardlink" href="'.$url = new moodle_url('/message/index.php').'">'
         .get_string('messages', 'local_dashboard').'</a></td></tr>';
         $text .= "</table>";
 }
 $enrolresult = enrol_get_my_courses('summary', 'visible DESC,sortorder ASC');
 $courses = array();
+$workshop = null;
+$quiz = null;
+$assign = null;
 foreach ($enrolresult as $enrol) {
         $courses[] = $DB->get_record('course' , array('id' => $enrol->id));
 }
@@ -103,13 +106,7 @@ if (!empty($courses)) {
                 $cmid = $modskey;
                                                    break;
             }
-            $context = get_context_instance(CONTEXT_MODULE, $cmid);
-            $contextid = '';
-            foreach ($context as $testi => $testv) {
-                $contextid = $testv;
-                                                   break;
-            }
-            $cours[$category->name][] = $cj->id.'||'.$cj->shortname.'||'.$contextid.'||'.$cj->format.'||'.$cmid;
+            $cours[$category->name][] = $cj->id.'||'.$cj->shortname.'||'.$cj->format.'||'.$cmid;
             $shortnames[] = "'".$cj->shortname."'";
         }
             $coursecount++;
@@ -118,19 +115,15 @@ if (!empty($courses)) {
     foreach ($cours as $cname => $cval) {
         foreach ($cval as $vl => $cc) {
             $ts = explode("||", $cc);
-            if ($isadmin) {
+            if (is_siteadmin()) {
                     $coursetext .= '<tr><td><a class = "dashboardlink" href = "'.
-                    $url = new moodle_url($CFG->wwwroot.'/course/view.php' , array('id' => $ts[0])).'">'.$ts[1].
+                    $url = new moodle_url('/course/view.php' , array('id' => $ts[0])).'">'.$ts[1].
                     '</a></td>';
             } else {
-                if (!strcmp(strtolower($ts[3]), 'scorm')) {
-                    $coursetext .= '<tr><td><a class="dashboardlink" href = "'.$url = new moodle_url($CFG->wwwroot
-                    .'/pluginfile.php/'.$ts[2].'/mod_scorm/content/1/launch.html' , array('pagename' => 'dashboard')).'">'.
-                    $ts[1].'</a></td></tr>';
-                } else {
+               
                     $coursetext .= '<tr><td><a class = "dashboardlink" href = "'.
-                    $url = new moodle_url($CFG->wwwroot.'/course/view.php' , array('id' => $ts[0])).'">'.$ts[1].'</a></td>';
-                }
+                    $url = new moodle_url('/course/view.php' , array('id' => $ts[0])).'">'.$ts[1].'</a></td>';
+            
             }
                     $coursetext .= '</tr>';
         }
@@ -140,7 +133,7 @@ if (!empty($courses)) {
     $coursetext = "<table>";
     $coursetext .= '<tr><td>'.get_string('nocourses', 'local_dashboard').'</td></tr>';
     $coursetext .= '<tr><td><a class="dashboardlink" href = "'. $url =
-    new moodle_url($CFG->wwwroot.'/course/index.php').'">Courses</a></td></tr>';
+    new moodle_url('/course/index.php').'">Courses</a></td></tr>';
     $coursetext .= "</table>";
 }
 $blogquery = "select id, subject from {post} where module= 'blog' order by id desc";
@@ -150,21 +143,21 @@ if (count($blogrun) > 0) {
     $blogtext = "<table>";
     foreach ($blogrun as $bval) {
         $blogtext .= '<tr><td><a class="dashboardlink" href = "'.$url =
-        new moodle_url($CFG->wwwroot.'/blog/index.php' , array('entryid' => $bval->id)).'">'.$bval->subject.'</a></td></tr>';
+        new moodle_url('/blog/index.php' , array('entryid' => $bval->id)).'">'.$bval->subject.'</a></td></tr>';
         if ($blogcount == 6) {
             break;
         }
         $blogcount ++;
     }
     $blogtext .= '<tr><td><a class = "dashboardlink" href = "'.$url =
-    new moodle_url($CFG->wwwroot.'/blog/edit.php' , array('action' => 'add')).'">Add a new entry</a></td></tr>';
+    new moodle_url('/blog/edit.php' , array('action' => 'add')).'">'.get_string('add_a_new_entry', 'local_dashboard').'</a></td></tr>';
     $blogtext .= "</table>";
 } else {
     $blogtext = "<table>";
     $blogtext .= '<tr><td><a class="dashboardlink" href="'.$url =
-    new moodle_url($CFG->wwwroot.'/blog/index.php' , array('userid' => $USER->id)).'">View all of my entries</a></td></tr>';
+    new moodle_url('/blog/index.php' , array('userid' => $USER->id)).'">'.get_string('view_all_entries', 'local_dashboard').'</a></td></tr>';
     $blogtext .= '<tr><td><a class="dashboardlink" href="'.$url =
-    new moodle_url($CFG->wwwroot.'/blog/edit.php' , array('action' => 'add')).'">Add a new entry</a></td></tr>';
+    new moodle_url('/blog/edit.php' , array('action' => 'add')).'">'.get_string('add_a_new_entry', 'local_dashboard').'</a></td></tr>';
     $blogtext .= "</table>";
 }
 $enrolresults = enrol_get_my_courses('summary', 'visible DESC,sortorder ASC');
@@ -212,7 +205,7 @@ if (!empty($assign)) {
         if ($asgncount < 2) {
             $asgntext .= '<tr>';
             $asgntext .= '<td><a class="dashboardlink" href="'.$url =
-            new moodle_url($CFG->wwwroot.'/mod/assign/view.php' , array('id' => $cj->id)).'">'.$cj->name.'</a></td></tr>';
+            new moodle_url('/mod/assign/view.php' , array('id' => $cj->id)).'">'.$cj->name.'</a></td></tr>';
         }
             $asgncount++;
     }
@@ -223,7 +216,7 @@ if (!empty($quiz)) {
         if ($asgncount < 3) {
             $asgntext .= '<tr>';
             $asgntext .= '<td><a class = "dashboardlink" href="'.$url =
-            new moodle_url($CFG->wwwroot.'/mod/quiz/view.php' , array('id' => $cj->id)).'">'.$cj->name.'</a></td></tr>';
+            new moodle_url('/mod/quiz/view.php' , array('id' => $cj->id)).'">'.$cj->name.'</a></td></tr>';
         }
             $asgncount++;
     }
@@ -234,7 +227,7 @@ if (!empty($workshop)) {
         if ($asgncount < 2) {
             $asgntext .= '<tr>';
             $asgntext .= '<td><a class = "dashboardlink" href = "'.$url =
-            new moodle_url($CFG->wwwroot.'/mod/workshop/view.php' , array('id' => $cj->id)).'">'.$cj->name.'</a></td></tr>';
+            new moodle_url('/mod/workshop/view.php' , array('id' => $cj->id)).'">'.$cj->name.'</a></td></tr>';
         }
             $asgncount++;
     }
@@ -254,9 +247,9 @@ $asgntext .= "</table>";
 				<span class="right">
 <a href="<?php 
 if (is_siteadmin()) {
-    echo $url = new moodle_url($CFG->wwwroot.'/course/index.php');
+    echo $url = new moodle_url('/course/index.php');
 } else {
-    echo $url = new moodle_url($CFG->wwwroot.'/my/index.php');
+    echo $url = new moodle_url('/my/index.php');
 }?>">
 						  <?php echo get_string('all', 'local_dashboard'); ?></a></span>
 			</div>
@@ -268,7 +261,7 @@ if (is_siteadmin()) {
 			<div class="widget-head">
 				<h3><?php echo get_string('myassessments', 'local_dashboard');?></h3>
                 <span class = "right"><a href = "<?php echo $url =
-                 new moodle_url($CFG->wwwroot.'/local/dashboard/moduleActivities.php');?>">
+                 new moodle_url('/local/dashboard/moduleActivities.php');?>">
                 <?php echo get_string('all', 'local_dashboard'); ?></a></span>
 			</div>
 			<div class="widget-content">
@@ -279,7 +272,7 @@ if (is_siteadmin()) {
 			<div class="widget-head">
 				<h3><?php echo get_string('myblogs', 'local_dashboard');?>
                 </h3><span class="right"><a href="<?php echo $url =
-                 new moodle_url($CFG->wwwroot.'/blog/index.php?courseid=1');?>">
+                 new moodle_url('/blog/index.php?courseid=1');?>">
                  <?php echo get_string('all', 'local_dashboard'); ?></a></span>
 			</div>
 			<div class="widget-content">
@@ -289,7 +282,7 @@ if (is_siteadmin()) {
 		<li id="item4" class="widgetli">
 			<div class="widget-head">
 				<h3><?php echo get_string('mymessages', 'local_dashboard');?></h3>
-                <span class="right"><a href="<?php echo $url = new moodle_url($CFG->wwwroot.'/message/index.php');?>">
+                <span class="right"><a href="<?php echo $url = new moodle_url('/message/index.php');?>">
                 <?php echo get_string('all', 'local_dashboard'); ?></a></span>
 			</div>
 			<div class="widget-content">
