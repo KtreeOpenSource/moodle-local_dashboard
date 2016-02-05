@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die;
 $plugin->version   = 2014081500;
 $plugin->release   = '1.0';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->requires  = 2013111800; // Moodle 2.6 release and upwards
+$plugin->requires  = 2015111600; // Moodle 3.0 release and upwards
 $plugin->component = 'local_dashboard';
 $plugin->cron = 0;
 ?>
