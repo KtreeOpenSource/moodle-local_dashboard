@@ -33,7 +33,6 @@
     float: left;
     margin-top: 8%;
     font-size: 35px;
-    /*font-family: arial-narrow;*/
     color: #244D51;
     width: 100%;
     text-shadow: 0px 3px 2px;
@@ -41,7 +40,6 @@
 .people_header_title2{
     float: left;
     font-size: 20px;
-    /*font-family: arial-narrow;*/
     color: #244D51;
     width: 100%;
 }
@@ -68,7 +66,7 @@
 }
 .has_no_custom_menu #page-header {
     border:none;
-    float:left !important;
+    float:left ;
     height:156px;
 }
 #menucontainer{
@@ -78,31 +76,25 @@
     background: url(img/nav-bg.png);
 }
 #awesomebar {
-    background-image:none !important;
+    background-image:none ;
 }
 ul.dropdown-horizontal li a, ul.dropdown-horizontal li span {
     background: url("img/border-line.png") no-repeat scroll center right transparent;
-    /*font-family: arial-narrow;*/
     font-size: 15px;
-    /*padding-right: 35px;*/
 }
 #menucontainer #awesomebar #menu-inner ul:nth-child(3) li span{
-    background: none !important;
-}
-#menucontainer #awesomebar #menu-inner ul:nth-child(2) li, #menucontainer #awesomebar #menu-inner ul:nth-child(3) li{
-    /*padding-left: 35px;*/
+    background: none ;
 }
 #page-footer {
     margin: 0 auto;
-    width: 90% !important;
-    float: none !important;
+    width: 90%;
+    float: none ;
 }
 .header_wrapper{
     background: url("img/header_bg_complete.jpg") no-repeat scroll 0 0 transparent;
     width:913px;
     height:156px;
 }
-
 .column-sec{
     float:left;
     height:310px;
@@ -110,5 +102,5 @@ ul.dropdown-horizontal li a, ul.dropdown-horizontal li span {
 }
  .grid .widgetli td
 {
-border:0 none !important;
+border:0 none ;
 }

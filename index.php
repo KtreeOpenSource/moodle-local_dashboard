@@ -52,15 +52,13 @@ if (!isguestuser()) {
         }
     }
 }
+$PAGE->requires->css('/local/dashboard/css/custom.css', false);
 echo $OUTPUT->header();
-
 $ufields = "u.id,u.picture,u.firstname,u.lastname,u.imagealt,u.email,u.lastaccess";
 $users = $DB->get_records_sql("SELECT $ufields, COUNT(m.useridfrom) AS count FROM {user} u, {message} m
                                WHERE m.useridto = ? AND u.id = m.useridfrom AND m.notification = 0
 							   GROUP BY $ufields", array($USER->id));
-
 $text = '';
-
 if (!empty($users)) {
     $text .= '<table>';
     foreach ($users as $user) {
@@ -120,10 +118,8 @@ if (!empty($courses)) {
                     $url = new moodle_url('/course/view.php' , array('id' => $ts[0])).'">'.$ts[1].
                     '</a></td>';
             } else {
-               
                     $coursetext .= '<tr><td><a class = "dashboardlink" href = "'.
                     $url = new moodle_url('/course/view.php' , array('id' => $ts[0])).'">'.$ts[1].'</a></td>';
-            
             }
                     $coursetext .= '</tr>';
         }
@@ -132,8 +128,8 @@ if (!empty($courses)) {
 } else {
     $coursetext = "<table>";
     $coursetext .= '<tr><td>'.get_string('nocourses', 'local_dashboard').'</td></tr>';
-    $coursetext .= '<tr><td><a class="dashboardlink" href = "'. $url =
-    new moodle_url('/course/index.php').'">Courses</a></td></tr>';
+    $coursetext .= '<tr><td><a class="dashboardlink" href = "'. $url = new moodle_url('/course/index.php').'">
+    Courses</a></td></tr>';
     $coursetext .= "</table>";
 }
 $blogquery = "select id, subject from {post} where module= 'blog' order by id desc";
@@ -142,22 +138,25 @@ $blogcount = 1;
 if (count($blogrun) > 0) {
     $blogtext = "<table>";
     foreach ($blogrun as $bval) {
-        $blogtext .= '<tr><td><a class="dashboardlink" href = "'.$url =
-        new moodle_url('/blog/index.php' , array('entryid' => $bval->id)).'">'.$bval->subject.'</a></td></tr>';
+        $blogtext .= '<tr><td><a class="dashboardlink" href = "'.
+        $url = new moodle_url('/blog/index.php' , array('entryid' => $bval->id)).'">'.$bval->subject.'</a></td></tr>';
         if ($blogcount == 6) {
             break;
         }
         $blogcount ++;
     }
-    $blogtext .= '<tr><td><a class = "dashboardlink" href = "'.$url =
-    new moodle_url('/blog/edit.php' , array('action' => 'add')).'">'.get_string('add_a_new_entry', 'local_dashboard').'</a></td></tr>';
+    $blogtext .= '<tr><td><a class = "dashboardlink" href = "'.
+    $url = new moodle_url('/blog/edit.php' , array('action' => 'add')).'">'.
+    get_string('add_a_new_entry', 'local_dashboard').'</a></td></tr>';
     $blogtext .= "</table>";
 } else {
     $blogtext = "<table>";
-    $blogtext .= '<tr><td><a class="dashboardlink" href="'.$url =
-    new moodle_url('/blog/index.php' , array('userid' => $USER->id)).'">'.get_string('view_all_entries', 'local_dashboard').'</a></td></tr>';
-    $blogtext .= '<tr><td><a class="dashboardlink" href="'.$url =
-    new moodle_url('/blog/edit.php' , array('action' => 'add')).'">'.get_string('add_a_new_entry', 'local_dashboard').'</a></td></tr>';
+    $blogtext .= '<tr><td><a class="dashboardlink" href="'.
+    $url = new moodle_url('/blog/index.php' , array('userid' => $USER->id)).'">'.
+    get_string('view_all_entries', 'local_dashboard').'</a></td></tr>';
+    $blogtext .= '<tr><td><a class="dashboardlink" href="'.
+    $url = new moodle_url('/blog/edit.php' , array('action' => 'add')).'">'.
+    get_string('add_a_new_entry', 'local_dashboard').'</a></td></tr>';
     $blogtext .= "</table>";
 }
 $enrolresults = enrol_get_my_courses('summary', 'visible DESC,sortorder ASC');
@@ -204,8 +203,8 @@ if (!empty($assign)) {
     foreach ($assign as $ci => $cj) {
         if ($asgncount < 2) {
             $asgntext .= '<tr>';
-            $asgntext .= '<td><a class="dashboardlink" href="'.$url =
-            new moodle_url('/mod/assign/view.php' , array('id' => $cj->id)).'">'.$cj->name.'</a></td></tr>';
+            $asgntext .= '<td><a class="dashboardlink" href="'.
+            $url = new moodle_url('/mod/assign/view.php' , array('id' => $cj->id)).'">'.$cj->name.'</a></td></tr>';
         }
             $asgncount++;
     }
@@ -215,8 +214,8 @@ if (!empty($quiz)) {
     foreach ($quiz as $ci => $cj) {
         if ($asgncount < 3) {
             $asgntext .= '<tr>';
-            $asgntext .= '<td><a class = "dashboardlink" href="'.$url =
-            new moodle_url('/mod/quiz/view.php' , array('id' => $cj->id)).'">'.$cj->name.'</a></td></tr>';
+            $asgntext .= '<td><a class = "dashboardlink" href="'.
+            $url = new moodle_url('/mod/quiz/view.php' , array('id' => $cj->id)).'">'.$cj->name.'</a></td></tr>';
         }
             $asgncount++;
     }
@@ -226,8 +225,8 @@ if (!empty($workshop)) {
     foreach ($workshop as $ci => $cj) {
         if ($asgncount < 2) {
             $asgntext .= '<tr>';
-            $asgntext .= '<td><a class = "dashboardlink" href = "'.$url =
-            new moodle_url('/mod/workshop/view.php' , array('id' => $cj->id)).'">'.$cj->name.'</a></td></tr>';
+            $asgntext .= '<td><a class = "dashboardlink" href = "'.
+            $url = new moodle_url('/mod/workshop/view.php' , array('id' => $cj->id)).'">'.$cj->name.'</a></td></tr>';
         }
             $asgncount++;
     }
@@ -237,66 +236,59 @@ if (($workshop == null) && ($quiz == null) && ($assign == null)) {
 }
 $asgntext .= "</table>";
 ?>
-<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300' rel='stylesheet' type='text/css'>
-<link href='css/custom.css' rel='stylesheet' type='text/css'>
 <section style="margin-left:center; margin-right:auto;">
     <ul class="sortable grid dashboard dashboard-g">
         <li id="item1" class="widgetli">
-			<div class="widget-head" style="min-height: 16% !important;">
-				<h3><?php echo get_string('mycourses', 'local_dashboard');?></h3>
-				<span class="right">
-<a href="<?php 
+            <div class="widget-head" style="min-height: 16% !important;">
+              <h3><?php echo get_string('mycourses', 'local_dashboard');?></h3>
+                  <span class="right">
+<a href="<?php
 if (is_siteadmin()) {
     echo $url = new moodle_url('/course/index.php');
 } else {
     echo $url = new moodle_url('/my/index.php');
 }?>">
-						  <?php echo get_string('all', 'local_dashboard'); ?></a></span>
-			</div>
-			<div class="widget-content">
-				<p><?php echo $coursetext;?></p>
-			</div>
-		</li>			
-		<li id="item2" class="widgetli">
-			<div class="widget-head">
-				<h3><?php echo get_string('myassessments', 'local_dashboard');?></h3>
-                <span class = "right"><a href = "<?php echo $url =
-                 new moodle_url('/local/dashboard/moduleActivities.php');?>">
+            <?php echo get_string('all', 'local_dashboard'); ?></a></span>
+            </div>
+            <div class="widget-content">
+            <p><?php echo $coursetext;?></p>
+            </div>
+        </li>
+        <li id="item2" class="widgetli">
+            <div class="widget-head">
+                <h3><?php echo get_string('myassessments', 'local_dashboard');?></h3>
+                <span class = "right">
+                <a href = "<?php echo $url = new moodle_url('/local/dashboard/moduleActivities.php');?>">
                 <?php echo get_string('all', 'local_dashboard'); ?></a></span>
-			</div>
-			<div class="widget-content">
-				<p><?php echo $asgntext;?></p>
-			</div>
-		</li>
-		<li id="item3" class="widgetli">
-			<div class="widget-head">
-				<h3><?php echo get_string('myblogs', 'local_dashboard');?>
-                </h3><span class="right"><a href="<?php echo $url =
-                 new moodle_url('/blog/index.php?courseid=1');?>">
-                 <?php echo get_string('all', 'local_dashboard'); ?></a></span>
-			</div>
-			<div class="widget-content">
-				<p><?php echo $blogtext;?></p>
-			</div>
-		</li>
-		<li id="item4" class="widgetli">
-			<div class="widget-head">
-				<h3><?php echo get_string('mymessages', 'local_dashboard');?></h3>
+            </div>
+            <div class="widget-content">
+                 <p><?php echo $asgntext;?></p>
+            </div>
+        </li>
+        <li id="item3" class="widgetli">
+            <div class="widget-head">
+                <h3><?php echo get_string('myblogs', 'local_dashboard');?>
+                </h3><span class="right"><a href="<?php echo $url = new moodle_url('/blog/index.php?courseid=1');?>">
+                <?php echo get_string('all', 'local_dashboard'); ?></a></span>
+            </div>
+            <div class="widget-content">
+                <p><?php echo $blogtext;?></p>
+            </div>
+        </li>
+        <li id="item4" class="widgetli">
+            <div class="widget-head">
+                <h3><?php echo get_string('mymessages', 'local_dashboard');?></h3>
                 <span class="right"><a href="<?php echo $url = new moodle_url('/message/index.php');?>">
                 <?php echo get_string('all', 'local_dashboard'); ?></a></span>
-			</div>
-			<div class="widget-content">
-				<p><?php echo $text;?></p>
-			</div>
-		</li>
-		
-		<!--<li id="item5">Item 5</li>
-		<li id="item6">Item 6</li>-->
-	</ul>
+            </div>
+            <div class="widget-content">
+                <p><?php echo $text;?></p>
+            </div>
+        </li>
+    </ul>
 </section>
-<script src="js/zepto.js"></script>
-<script src="js/zepto.dragswap.js"></script>
-<script src="js/custom.js"></script>
-
 <?php
+$PAGE->requires->js('/local/dashboard/js/zepto.js', false);
+$PAGE->requires->js('/local/dashboard/js/zepto.dragswap.js', false);
+$PAGE->requires->js('/local/dashboard/js/custom.js', false);
 echo $OUTPUT->footer();

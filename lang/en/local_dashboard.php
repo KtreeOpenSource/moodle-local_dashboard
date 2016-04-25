@@ -37,6 +37,4 @@ $string['tblheadmodulename'] = 'Module Name';
 $string['noactivities'] = 'Sorry no activities are available.';
 $string['all'] = 'ALL';
 $string['view_all_entries'] = 'View all of my entries';
-$string['add_a_new_entry'] = 'Add a new entry'; 
-
-
+$string['add_a_new_entry'] = 'Add a new entry';

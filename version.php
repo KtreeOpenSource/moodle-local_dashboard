@@ -19,8 +19,7 @@
  *
  * This file contains common functions for the dashboard and profile pages.
  *
-   * @package    local_dashboard
- * @category   local
+ * @package    local_dashboard
  * @copyright  2015 Ktree.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -29,7 +28,6 @@ defined('MOODLE_INTERNAL') || die;
 $plugin->version   = 2014081500;
 $plugin->release   = '1.0';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->requires  = 2015111600; // Moodle 3.0 release and upwards
+$plugin->requires  = 2015111600; // Moodle 3.0 release and upwards.
 $plugin->component = 'local_dashboard';
 $plugin->cron = 0;
-?>

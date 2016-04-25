@@ -2,7 +2,7 @@
 .download-dedication {text-align: center;}
 .table-dedication.table-group .c0, .table-dedication.table-all .c0 {width: 30px;}
 .printreport1 {
-    clear: both !important;
-    float: right !important;
-    margin-top: -2em !important;
+    clear: both ;
+    float: right ;
+    margin-top: -2em ;
 }

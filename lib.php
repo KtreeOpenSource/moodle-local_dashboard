@@ -25,12 +25,9 @@
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once("$CFG->libdir/blocklib.php");
 global $DB, $CFG;
-function dashboard_add_instance() {
-    return true;
-}
 function local_dashboard_extend_navigation(global_navigation $navigation) {
-    $perfornamceurl = '/local/dashboard/index.php';
+    $dashboardurl = '/local/dashboard/index.php';
     if (isloggedin()) {
-        $nodeform = $navigation->add('Dashboard', $perfornamceurl);
+        $nodeform = $navigation->add('KTree Dashboard', $dashboardurl);
     }
 }

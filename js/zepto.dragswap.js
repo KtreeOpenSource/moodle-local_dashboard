@@ -4,7 +4,7 @@
 * Repository: https://github.com/james2doyle/zepto-dragswap 
 * Licensed under the MIT license 
 */
-;(function($) {
+(function($) {
   $.fn.dragswap = function(options) {
     var dragSrcEl;
     function getPrefix() {
